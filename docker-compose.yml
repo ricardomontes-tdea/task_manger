@@ -1,0 +1,27 @@
+version: '3.9'
+
+services: 
+  #MONGO SERVICE
+  task_manager_mongo_db:
+    container_name: mongodb_task_manager
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+  
+  #API NODE
+  task_manager_api:
+    build: .
+    ports:
+      # local->container
+      - 3000:3000
+    environment:
+      APP_PORT: 3000
+      MONGODB_URI: mongodb://mongo_db:27017
+      DB_NAME: task_manager_db
+    depends_on:
+      - task_manager_mongo_db
+
+volumes:
+  mongo_data: {}
+
