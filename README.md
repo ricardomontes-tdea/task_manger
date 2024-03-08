@@ -6,4 +6,3 @@ Node.js app with Express to expose an API to manage tasks
 ### TODO
 - Implement ODM features with mongoDB and mongoose
 - Create CRUD endpoints
-- Stablish github hooks with jenkins
