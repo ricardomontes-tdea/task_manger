@@ -6,6 +6,9 @@ const {
 } = process.env
 
 const dbConnection = async () => {
+  console.log('---> mongo: ',MONGODB_URI);
+  console.log('---> db: ',DB_NAME);
+
   try {
     await mongoose.connect(`${MONGODB_URI}/${DB_NAME}`);
     console.log('[INFO] MongoDB is online');
@@ -14,8 +17,6 @@ const dbConnection = async () => {
     throw new Error('[ERROR] Is not possible to initialize the connection with MONGO');
   }
 }
-
-console.log('cambios');
 
 module.exports = {
   dbConnection

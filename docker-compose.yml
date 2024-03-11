@@ -6,18 +6,21 @@ services:
     container_name: mongodb_task_manager
     image: mongo:latest
     restart: always
+    ports:
+      - 27017:27017
     volumes:
       - mongo_data:/data/db
   
   #API NODE
   task_manager_api:
+    restart: always
     build: .
     ports:
       # local->container
       - 3000:3000
     environment:
       APP_PORT: 3000
-      MONGODB_URI: mongodb://mongo_db:27017
+      MONGODB_URI: mongodb://task_manager_mongo_db:27017
       DB_NAME: task_manager_db
     depends_on:
       - task_manager_mongo_db
