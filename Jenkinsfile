@@ -7,24 +7,22 @@ pipeline{
         echo '==> Not specifed build stage'
       }
     }
-    
     stage ('Test'){
       steps{
         echo '==> Not specifed test stage'
       }
     }
 
-    stage('Cleanup containers') {
+    stage('Cleanup Containers') {
       steps {
         script {
-            bat 'docker-compose down --remove-orphans -v'
+            bat 'docker-compose down || exit 0'
         }
       }
     }
 
-    stage ('Build containers'){
+    stage ('Deploy'){
       steps{
-        bat 'docker-compose up -d'
         echo 'deploy stage here....'
       }
     }
