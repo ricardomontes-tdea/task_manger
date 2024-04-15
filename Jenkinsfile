@@ -7,9 +7,9 @@ pipeline{
         echo '==> Not specifed build stage'
       }
     }
-    stage ('Test'){
+    stage ('Run Jest Tests'){
       steps{
-        echo '==> Not specifed test stage'
+        sh 'npm run test'
       }
     }
     stage ('Deploy'){
