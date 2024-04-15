@@ -2,17 +2,17 @@ pipeline{
   agent any
 
   stages{
-    stage ('build'){
+    stage ('Install dependencies'){
       steps{
-        echo '==> Not specifed build stage'
+        sh 'npm install'
       }
     }
     stage ('Run Jest Tests'){
       steps{
-        sh 'npm run test'
+        sh 'npm test'
       }
     }
-    stage ('Deploy'){
+    stage ('Build containers'){
       steps{
         sh 'docker compose down -v'
 				sh 'docker-compose up -d --build'
