@@ -14,7 +14,8 @@ pipeline{
     }
     stage ('Deploy'){
       steps{
-        echo '--> build docker'
+        bat 'docker compose down -v'
+				bat 'docker-compose up -d --build'
       }
     }
   }
