@@ -12,18 +12,10 @@ pipeline{
         echo '==> Not specifed test stage'
       }
     }
-
-    stage('Cleanup Containers') {
-      steps {
-        script {
-            bat 'docker-compose down || exit 0'
-        }
-      }
-    }
-
     stage ('Deploy'){
       steps{
-        echo 'deploy stage here....'
+        sh 'docker compose down -v'
+				sh 'docker-compose up -d --build'
       }
     }
   }
