@@ -10,6 +10,7 @@ const router = Router();
 router.post(
   '/tasks', 
   check('name', 'Name is mandatory').not().isEmpty(),
+  validateFields,
   createTask
 );
 

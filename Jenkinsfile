@@ -14,7 +14,7 @@ pipeline{
     }
     stage ('Deploy'){
       steps{
-        sh 'docker-compose down -v'
+        echo 'Build containers'
       }
     }
   }

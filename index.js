@@ -1,6 +1,7 @@
 const express = require('express');
-const { dbConnection } = require('./database/config');
 require('dotenv').config();
+
+const { dbConnection } = require('./database/config');
 
 // Env VARS
 const { APP_PORT } = process.env

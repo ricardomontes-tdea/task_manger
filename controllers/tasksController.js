@@ -2,7 +2,6 @@ const { response } = require('express');
 const Task = require('../models/Task');
 
 const createTask = async (req, res = response) => {
-
   const { name, description } = req.body
 
   try {
@@ -23,9 +22,15 @@ const createTask = async (req, res = response) => {
 
     res.json({
       ok: true,
-      msg: 'Task created!'
+      msg: 'Task created!',
+      data: { 
+        name: name,
+        description: description
+      }
     });
   } catch (error) {
+    console.log('[ERROR] ', error);
+
     res.status(500).json({
       ok: false,
       error: {
@@ -33,11 +38,6 @@ const createTask = async (req, res = response) => {
       }
     })
   }
-
-  res.status(201).json({
-    ok: true,
-    msg: 'reponse ok!'
-  })
 };
 
 module.exports = {
