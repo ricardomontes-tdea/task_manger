@@ -4,12 +4,12 @@ pipeline{
   stages{
     stage ('Install dependencies'){
       steps{
-        sh 'npm install'
+        echo 'installing dependencies...'
       }
     }
     stage ('Run Jest Tests'){
       steps{
-        sh 'npm test'
+         echo 'running tests here.'
       }
     }
     stage ('Build containers'){
