@@ -8,5 +8,6 @@ Node.js app with Express to expose an API to manage tasks
 - mongo DB 
 - docker
 - mongoose
+- Jenkins
 ### Setup
 - `docker compose up --build -d`
