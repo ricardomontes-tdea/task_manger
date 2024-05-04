@@ -15,6 +15,8 @@ services:
   task_manager_api:
     restart: always
     build: .
+    volumes:
+      - .:/app
     ports:
       # local->container
       - 8000:8000
@@ -24,7 +26,18 @@ services:
       DB_NAME: task_manager_db
     depends_on:
       - task_manager_mongo_db
+      - task_manager_redis
+  
+
+  task_manager_redis:
+    container_name: redis_task_manager
+    image: "redis:alpine"
+    ports:
+        - 6379:6379
+    volumes:
+      - redis_data:/var/lib/redis/data
 
 volumes:
   mongo_data: {}
+  redis_data: {}
 
