@@ -1,10 +1,12 @@
-const express = require('express');
-require('dotenv').config();
+const express = require("express");
+require("dotenv").config();
 
-const { dbConnection } = require('./database/config');
+require("./queues/email.queue");
+
+const { dbConnection } = require("./database/config");
 
 // Env VARS
-const { APP_PORT } = process.env
+const { APP_PORT } = process.env;
 
 const app = express();
 
@@ -15,7 +17,7 @@ app.use(express.json());
 dbConnection();
 
 // app routes
-app.use('/api/v1', require('./routes/taskRoutes') );
+app.use("/api/v1", require("./routes/taskRoutes"));
 
 app.listen(APP_PORT, () => {
   console.log(`[INFO] SERVER RUNNING AT PORT ${APP_PORT}`);

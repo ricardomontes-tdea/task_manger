@@ -10,11 +10,22 @@ services:
       - 27017:27017
     volumes:
       - mongo_data:/data/db
+
+  task_manager_redis:
+    container_name: redis_task_manager
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data/redis/db
+    
   
   #API NODE
   task_manager_api:
     restart: always
     build: .
+    volumes:
+      - .:/app
     ports:
       # local->container
       - 8000:8000
@@ -27,4 +38,5 @@ services:
 
 volumes:
   mongo_data: {}
+  redis_data: {}
 
