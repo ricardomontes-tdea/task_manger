@@ -17,7 +17,7 @@ pipeline{
     }
     stage ('Run Jest Tests'){
       steps{
-        echo 'running tests here.'
+        echo 'Starting running jest unit tests'
         script {
             if (isUnix()) {
                   sh 'npm run jest'
