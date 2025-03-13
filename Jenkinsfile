@@ -4,7 +4,7 @@ pipeline{
   stages{
     stage ('Install dependencies'){
       steps{
-        echo 'installing dependencies...'
+        echo 'Starting installing dependencies...'
 
         script {
             if (isUnix()) {
