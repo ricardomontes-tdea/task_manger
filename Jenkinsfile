@@ -20,9 +20,9 @@ pipeline{
         echo 'Starting running jest unit tests'
         script {
             if (isUnix()) {
-                  sh 'npm run jest'
+                sh 'npm run test'
             } else {
-                bat 'npm run jest'
+                bat 'npm run test'
             }
         }
       }
