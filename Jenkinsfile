@@ -27,7 +27,7 @@ pipeline{
         }
       }
     }
-    stage ('Build containers'){
+    stage ('Down containers'){
       steps{
         script {
             if (isUnix()) {
@@ -35,6 +35,17 @@ pipeline{
             } else {
                 bat 'docker compose down -v'
             }
+        }
+      }
+    }
+    stage('Build and up containers'){
+      steps{
+        script{
+          if (isUnix()) {
+            sh 'docker compose up --build -d'
+          } else {
+            bat 'docker compose up --build -d'
+          }
         }
       }
     }
