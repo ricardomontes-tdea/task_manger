@@ -11,3 +11,6 @@ Node.js app with Express to expose an API to manage tasks
 - Jenkins
 ### Setup
 - `docker compose up --build -d`
+
+### New section here
+- this section is enabled in order to show a pipeline trigger
