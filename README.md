@@ -38,6 +38,17 @@ The API is configured via environment variables (already set in `docker-compose.
 | `APP_PORT` | Port the API listens on | `8000` |
 | `MONGODB_URI` | MongoDB connection string (without DB name) | `mongodb://task_manager_mongo_db:27017` |
 | `DB_NAME` | MongoDB database name | `task_manager_db` |
+| `CORS_ORIGIN` | Allowed origin(s) for cross-origin requests. Comma-separated for multiple, or `*` for any. | `http://localhost:3000` |
+
+## CORS
+
+The API has CORS enabled (via the `cors` package) so it can be consumed by a separate frontend, e.g. a React app running on a different origin. By default `CORS_ORIGIN` is `*` (any origin allowed). To restrict it, set `CORS_ORIGIN` in `docker-compose.yml`, e.g.:
+
+```yaml
+CORS_ORIGIN: "http://localhost:3000"
+# or multiple origins:
+CORS_ORIGIN: "http://localhost:3000,https://myapp.com"
+```
 
 ## API Reference
 
