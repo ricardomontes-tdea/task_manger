@@ -5,6 +5,7 @@ const {
   createTask,
   deleteTask,
   getTasks,
+  updateTaskStatus,
 } = require("../controllers/tasksController");
 
 const { validateFields } = require("../middlewares/validateFields");
@@ -24,5 +25,13 @@ router.get("/tasks", getTasks);
 
 // Delete a task
 router.delete("/tasks/:id", deleteTask);
+
+// Update a task's done status
+router.patch(
+  "/tasks/:id",
+  check("isDone", "isDone must be a boolean").isBoolean(),
+  validateFields,
+  updateTaskStatus
+);
 
 module.exports = router;

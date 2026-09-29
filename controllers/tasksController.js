@@ -2,7 +2,7 @@ const { response } = require("express");
 const Task = require("../models/Task");
 
 const createTask = async (req, res = response) => {
-  const { name, description } = req.body;
+  const { name, description, isDone = false } = req.body;
 
   try {
     let task = await Task.findOne({ name });
@@ -16,7 +16,7 @@ const createTask = async (req, res = response) => {
       });
     }
 
-    task = new Task({ name, description });
+    task = new Task({ name, description, isDone });
 
     await task.save();
 
@@ -26,6 +26,7 @@ const createTask = async (req, res = response) => {
       data: {
         name: name,
         description: description,
+        isDone: isDone,
       },
     });
   } catch (error) {
@@ -93,8 +94,46 @@ const deleteTask = async (req, res = response) => {
   }
 };
 
+const updateTaskStatus = async (req, res = response) => {
+  const { id } = req.params;
+  const { isDone } = req.body;
+
+  try {
+    const task = await Task.findById(id);
+
+    if (!task) {
+      return res.status(404).json({
+        ok: false,
+        error: {
+          message: "Task not found",
+        },
+      });
+    }
+
+    task.isDone = isDone;
+
+    await task.save();
+
+    res.json({
+      ok: true,
+      msg: "Task updated!",
+      data: task,
+    });
+  } catch (error) {
+    console.log("[ERROR] ", error);
+
+    res.status(500).json({
+      ok: false,
+      error: {
+        message: "Something went wrong!",
+      },
+    });
+  }
+};
+
 module.exports = {
   createTask,
   getTasks,
   deleteTask,
+  updateTaskStatus,
 };

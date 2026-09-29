@@ -1,5 +1,5 @@
 const httpMock = require('node-mocks-http');
-const { createTask } = require('../../controllers/tasksController');
+const { createTask, updateTaskStatus } = require('../../controllers/tasksController');
 const Task = require('../../models/Task');
 
 jest.mock('../../models/Task');
@@ -34,7 +34,8 @@ describe('taskController test', () => {
         msg: 'Task created!',
         data: {
           name: mockTask.name,
-          description: mockTask.description
+          description: mockTask.description,
+          isDone: false
         }
       });
     });
@@ -112,7 +113,91 @@ describe('taskController test', () => {
       console.log(respose._getJSONData());
 
       // expect(respose.statusCode).toBe(400);
-      
+
     });
   })
+
+  describe('when updateTaskStatus is called with a valid id', () => {
+    test('should update the task isDone status', async () => {
+      const mockTask = {
+        _id: '123',
+        name: 'test task',
+        description: 'some desc here',
+        isDone: false,
+        save: jest.fn().mockResolvedValue(true)
+      };
+
+      Task.findById.mockResolvedValue(mockTask);
+
+      const request = httpMock.createRequest({
+        params: { id: '123' },
+        body: { isDone: true }
+      });
+
+      const respose = httpMock.createResponse();
+
+      await updateTaskStatus(request, respose);
+
+      expect(mockTask.isDone).toBe(true);
+      expect(mockTask.save).toHaveBeenCalled();
+      expect(respose.statusCode).toBe(200);
+
+      expect(respose._getJSONData()).toEqual({
+        ok: true,
+        msg: 'Task updated!',
+        data: {
+          _id: mockTask._id,
+          name: mockTask.name,
+          description: mockTask.description,
+          isDone: true
+        }
+      });
+    });
+  });
+
+  describe('when updateTaskStatus is called with a non-existing id', () => {
+    test('should return a task not found error', async () => {
+      Task.findById.mockResolvedValue(null);
+
+      const request = httpMock.createRequest({
+        params: { id: 'unknown-id' },
+        body: { isDone: true }
+      });
+
+      const respose = httpMock.createResponse();
+
+      await updateTaskStatus(request, respose);
+
+      expect(respose.statusCode).toBe(404);
+
+      expect(respose._getJSONData()).toEqual({
+        ok: false,
+        error: {
+          message: 'Task not found'
+        }
+      });
+    });
+  });
+
+  describe('when updateTaskStatus raises an error', () => {
+    test('should raise an error', async () => {
+      Task.findById.mockRejectedValue(new Error('Something went wrong!'));
+
+      const request = httpMock.createRequest({
+        params: { id: '123' },
+        body: { isDone: true }
+      });
+
+      const respose = httpMock.createResponse();
+
+      await updateTaskStatus(request, respose);
+
+      expect(respose.statusCode).toBe(500);
+
+      const { ok, error: { message } } = respose._getJSONData()
+
+      expect(ok).toBe(false);
+      expect(message).toEqual('Something went wrong!');
+    });
+  });
 })

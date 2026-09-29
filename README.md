@@ -65,11 +65,13 @@ Body:
 ```json
 {
   "name": "Buy groceries",
-  "description": "Milk, eggs, bread"
+  "description": "Milk, eggs, bread",
+  "isDone": false
 }
 ```
 
 - `name` is required (validated, must not be empty).
+- `isDone` is optional and defaults to `false`.
 
 Responses:
 - `200` — task created
@@ -81,7 +83,27 @@ Responses:
 `GET /api/v1/tasks`
 
 Responses:
-- `200` — returns `{ ok: true, tasks: [...] }`
+- `200` — returns `{ ok: true, tasks: [...] }` (each task includes `isDone`)
+- `500` — server error
+
+### Update a task's done status
+
+`PATCH /api/v1/tasks/:id`
+
+Body:
+
+```json
+{
+  "isDone": true
+}
+```
+
+- `isDone` is required and must be a boolean.
+
+Responses:
+- `200` — task updated
+- `400` — validation error (`isDone` missing or not a boolean)
+- `404` — task not found
 - `500` — server error
 
 ### Delete a task

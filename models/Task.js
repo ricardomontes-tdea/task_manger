@@ -8,6 +8,10 @@ const TaskSchema = Schema({
   description: {
     type: String,
     require: true
+  },
+  isDone: {
+    type: Boolean,
+    default: false
   }
 })
 
