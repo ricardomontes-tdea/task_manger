@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node --watch index.js",
     "jest": "jest --watchAll --coverage",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "seed": "node database/seed.js"
   },
   "author": "Ricardo Montes",
   "license": "ISC",

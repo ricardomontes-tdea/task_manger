@@ -82,6 +82,16 @@ Responses:
 - `404` — task not found
 - `500` — server error
 
+## Seed data
+
+Load 20 sample tasks into the database (requires the containers to be running so `MONGODB_URI`/`DB_NAME` are reachable):
+
+```bash
+npm run seed
+```
+
+This clears the `tasks` collection and inserts 20 sample records. See `database/seed.js`.
+
 ## Testing
 
 ```bash
