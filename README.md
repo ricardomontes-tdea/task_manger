@@ -84,10 +84,10 @@ Responses:
 
 ## Seed data
 
-Load 20 sample tasks into the database (requires the containers to be running so `MONGODB_URI`/`DB_NAME` are reachable):
+Load 20 sample tasks into the database. There is no `.env` file in this project (env vars are provided by `docker-compose.yml`), so run the seed script inside the running `task_manager_api` container:
 
 ```bash
-npm run seed
+docker compose exec task_manager_api npm run seed
 ```
 
 This clears the `tasks` collection and inserts 20 sample records. See `database/seed.js`.
